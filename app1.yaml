@@ -1,0 +1,8 @@
+---
+
+- name: working for app1
+  hosts: server1
+  roles:
+    - apache
+  vars:
+    index_file: index.html

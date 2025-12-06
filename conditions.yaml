@@ -1,0 +1,25 @@
+---
+
+- name: working with conditions
+  hosts: all
+  vars:
+    var1: 10
+    var2: 20
+    var3: 30
+  tasks:
+    - name: working with relational operator
+      command: echo "value of var1 is big {{ var1 }}"
+      when: var1 > var2
+
+    - name: working with relational operator
+      command: echo " the highest value is {{ var2 }}"
+      when: var2>var1
+
+    - name: working with conditional operator
+      command: echo " the highest of 3 is {{ var1 }}"
+      when: (var1 > var2) and (var1 > var3)
+
+    - name: working with is defined
+      command: echo " the var is defined {{ var1 }}"
+      when:var1 is defined 
+

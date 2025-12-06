@@ -1,0 +1,16 @@
+---
+
+- name: working with loops
+  hosts: all
+  serial: 1
+  vars:
+    mydata:
+      subject: devops
+      trainer: Shaan
+  tasks:
+    - name: working with with_items
+      command: echo " my item is {{ item }}"
+      with_items: [devops, aws, azure]
+    - name: working with with_dict
+      command: echo " the key is {{ item.key }} and value is  {{ item.value}}"
+      with_dict: "{{ mydata }}"

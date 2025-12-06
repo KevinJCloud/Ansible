@@ -1,0 +1,7 @@
+---
+- name: working with group vars
+  hosts: all
+  tasks:
+    - name: working with group
+      command: "echo os version is: {{ OS_version }}"
+

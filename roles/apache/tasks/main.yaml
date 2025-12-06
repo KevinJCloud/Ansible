@@ -1,0 +1,23 @@
+---
+
+- name: Install the latest version of Apache
+  yum:
+    name: httpd
+    state: latest
+
+- name: Enable service httpd and ensure it is not masked
+  systemd_service:
+    name: httpd
+    enabled: true
+
+- name: place a file index.html to /var/www/html/index
+  copy:
+    src: "{{ index_file }}"
+    dest: /var/www/html/index.html
+    owner: apache
+    group: apache
+
+- name: Enable service httpd and start
+  systemd_service:
+    name: httpd
+    state: started

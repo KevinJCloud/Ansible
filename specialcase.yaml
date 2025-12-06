@@ -1,0 +1,13 @@
+---
+
+- name: working with special case
+  hosts: all
+  serial: 1
+  tasks:
+    - name: colleting hostname
+      command: uname -a
+    - name: collecting ip
+      command: hostname -I
+      run_once: true
+      delegate_to: server1
+    

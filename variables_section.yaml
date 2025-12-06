@@ -1,0 +1,23 @@
+---
+
+- name: working with variables
+  hosts: all
+  vars:
+    subject: ansible
+  vars_files:
+    - /root/myansible/multivars.yaml
+  tasks:
+    - name: consuming value form vars section
+      command: echo " my var is {{ subject }}"
+      register: myoutput
+
+    - name:
+      debug:
+        msg: "{{ myoutput.stdout}}"
+
+    - name:
+      set_fact:
+        myvalue: "{{ myoutput.stdout}}"
+    - name:
+      command: echo " my subject is {{ subject }} and {{ batchno }}"
+    

@@ -1,0 +1,13 @@
+---
+
+- name: working with template module
+  hosts: all
+  vars:
+    batchno: 5
+  tasks:
+    - name: the commands for template module
+      template:
+       src: /root/myansible/test.txt
+       dest: /opt/mytemp
+
+     
