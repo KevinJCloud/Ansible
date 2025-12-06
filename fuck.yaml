@@ -1,0 +1,12 @@
+---
+
+- name: my java app
+  hosts: server2
+  roles:
+    - java
+  vars:
+    Mvn_Version: 3.8.9
+    mvn_path: "/usr/local/apache-maven/apache-maven-{{ Mvn_Version }}"
+    java_jar_path: "/opt/app"
+    java_code_path: "/tmp/javacode"
+    git_repo: "https://github.com/shan5a6/javaSpringBoot.git"

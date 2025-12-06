@@ -1,0 +1,8 @@
+---
+
+- name: app for app2
+  hosts: server2
+  roles:
+    - apache
+  vars:
+    index_file: client2.html

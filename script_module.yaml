@@ -1,0 +1,16 @@
+---
+
+- name: working for script module
+  hosts: server1
+  tasks:
+   - name: running the script 
+     script: /root/myansible/script.sh
+     register: output
+   - name: debug module
+     debug: 
+       msg: "{{output.stdout_lines[3]}}"
+   - name: assign value to set_fact
+     set_fact:
+       myvalue: "{{output.stdout_lines[3]}}"
+
+    

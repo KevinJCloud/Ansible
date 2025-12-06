@@ -1,0 +1,15 @@
+
+---
+
+- name: my playbook
+  hosts: server1
+  vars:
+    batchno: 5
+  tasks:
+    - name: working with shell module
+      shell: uname -a;hostname -I
+
+    - name: working with copy module
+      copy:
+        src: /root/myansible/test.txt
+        dest: /opt/mytext.txt

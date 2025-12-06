@@ -1,0 +1,7 @@
+---
+
+- name: my first playbook
+  hosts: server1
+  tasks: 
+    - name: to get uptime
+      command: uptime

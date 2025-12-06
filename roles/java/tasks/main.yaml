@@ -1,0 +1,95 @@
+#installing java & git
+
+- name: Install the latest version of java
+  dnf:
+    name: "{{ item }}"	
+    state: latest
+  with_items: [java-11, git]
+
+#creating directory
+
+- name: Create a directory if it does not exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+  with_items: [ "{{ mvn_path }}" , "{{ java_jar_path }}"]
+  
+#unarchive the maven
+
+- name: Unarchive a file for maven
+  unarchive:
+    src: "https://downloads.apache.org/maven/maven-3/{{ Mvn_Version }}/binaries/apache-maven-{{ Mvn_Version }}-bin.tar.gz"
+    dest: "{{ mvn_path }}"
+    remote_src: yes 
+    extra_opts: [--strip-components=1]
+
+#template to move maven
+
+- name: template for moving maven script
+  template:
+    src: maven.sh
+    dest: /etc/profile.d/maven.sh
+    mode: "0755"
+
+#service file
+
+- name: template for moving javapp service file
+  template:
+    src: javaapp.service
+    dest: /etc/systemd/system/javaapp.service
+    mode: "0644"
+
+#Load, start, enable service
+
+- name: Just for daemon reload
+  systemd_service:
+    daemon_reload: true
+
+
+- name: enable java app service
+  systemd_service:
+    name: javaapp.service
+    enabled: true
+    state: started 
+
+#cloning the code
+
+- name: cloning code
+  git:
+    repo: "{{ git_repo }}"
+    dest: "{{ java_code_path }}"
+  register: git_status
+
+- name: installing mvn
+  shell:
+     cmd: source /etc/profile.d/maven.sh &&  mvn clean install
+     chdir: "{{ java_code_path }}"
+  when: git_status.changed
+  register: build_art_status
+
+- name: finding jar file
+  find:
+    paths: "{{ java_code_path }}/target"
+    patterns: "*.jar"
+  register: myoutput
+
+#  - name: printing the register output
+ # debug:
+  # msg: "{{ myoutput.files[0].path }}"
+ 
+- name: copying jar files to /opt/app
+  copy:
+     src: "{{ myoutput.files[0].path }}"
+     dest: "{{ java_jar_path }}/app.jar"
+     remote_src: yes
+  when: build_art_status.changed
+  register: copy_artifact
+
+- name: enable java app service
+  systemd_service:
+    name: javaapp.service
+    state: restarted
+  when: copy_artifact.changed
+
+
