@@ -1,12 +1,13 @@
-pipeline{
- agent slave
+pipeline {
+    agent { label 'slave' }
 
- stages{
-      stage("Welcome Note") {
-        script{
-          println "Welcome to Devops"
+    stages {
+        stage("Welcome Note") {
+            steps {
+                script {
+                    println "Welcome to DevOps"
+                }
             }
-      
-      }
- }
+        }
+    }
 }
