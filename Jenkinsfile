@@ -5,6 +5,10 @@ pipeline {
       choice choices: ['DEV', 'Prod'], description: 'choose environment', name: 'ENV'
       string defaultValue: '1.0.0', description: 'selecting the version', name: 'Version', trim: true
     }
+    environment {
+       JAVA-HOME = "/usr/bin/java11"
+    }
+
 
     stages {
 
@@ -29,6 +33,11 @@ pipeline {
                         /* consume parameters variables */
                     println "the selected env is ${params.ENV}"
                     println "version is ${params.Version}"
+
+                              /* consume values of environment variables */
+
+                    println "my java path  is ${env.JAVA-HOME} "
+
                 }
             }
         }
