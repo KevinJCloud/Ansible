@@ -6,7 +6,7 @@ pipeline {
       string defaultValue: '1.0.0', description: 'selecting the version', name: 'Version', trim: true
     }
     environment {
-       JAVA-HOME = "/usr/bin/java11"
+       JAVA_HOME = "/usr/bin/java11"
     }
 
 
@@ -36,7 +36,7 @@ pipeline {
 
                               /* consume values of environment variables */
 
-                    println "my java path  is ${env.JAVA-HOME} "
+                    println "my java path  is ${env.JAVA_HOME} "
 
                 }
             }
