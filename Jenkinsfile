@@ -11,7 +11,7 @@ pipeline {
                     println "The subject name is $subject and batcno is $batchno"
                        }
                   }
-                                        }
+              }                          }
         stage("Working with env-variables") {
             steps {
                 script {
@@ -20,7 +20,7 @@ pipeline {
                     println "Workspace: ${env.WORKSPACE}" 
                     echo "Branch: ${env.BRANCH_NAME}"
                         }
-                
+                }
             }
     }
 }
